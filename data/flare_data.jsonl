@@ -1,0 +1,6 @@
+{"text": "The company reported strong quarterly earnings with revenue growth of 15%.", "label": "positive", "task": "sentiment", "split": "train"}
+{"text": "Stock prices plummeted after the disappointing earnings announcement.", "label": "negative", "task": "sentiment", "split": "train"}
+{"text": "The market remained unchanged following the Federal Reserve meeting.", "label": "neutral", "task": "sentiment", "split": "validation"}
+{"text": "Tech stocks surge on positive AI developments", "label": "bullish", "task": "headline", "split": "train"}
+{"text": "Banking sector faces regulatory headwinds", "label": "bearish", "task": "headline", "split": "train"}
+{"text": "Market volatility expected to continue", "label": "neutral", "task": "headline", "split": "validation"}

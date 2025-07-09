@@ -1,0 +1,2 @@
+{"context": "Apple Inc. reported revenue of $117.2 billion for Q1 2024, representing a 2% increase from the previous year. iPhone sales accounted for 52% of total revenue.", "question": "What was Apple's Q1 2024 revenue?", "answer": "$117.2 billion", "task": "qa", "split": "train"}
+{"context": "The Federal Reserve raised interest rates by 0.25 percentage points to combat inflation. This marks the third rate increase this year.", "question": "By how much did the Fed raise rates?", "answer": "0.25 percentage points", "task": "qa", "split": "validation"}
