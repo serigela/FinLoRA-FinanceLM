@@ -1,0 +1,72 @@
+# Training Configuration for Finance LLM LoRA Fine-tuning
+
+training:
+  output_dir: "./output/finlora"
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 16
+  learning_rate: 3e-4
+  weight_decay: 0.01
+  warmup_steps: 100
+  logging_steps: 50
+  evaluation_strategy: "steps"
+  eval_steps: 200
+  save_steps: 500
+  save_total_limit: 3
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  report_to: ["wandb", "tensorboard"]
+  push_to_hub: false
+  hub_model_id: "your-org/finlora-mistral-7b"
+
+optimization:
+  fp16: true
+  gradient_checkpointing: true
+  dataloader_num_workers: 4
+  remove_unused_columns: false
+  label_smoothing_factor: 0.0
+  optim: "adamw_torch"
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 1.0
+
+data:
+  max_seq_length: 512
+  preprocessing_num_workers: 4
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+  seed: 42
+  
+multi_task:
+  task_weights:
+    sentiment: 1.0
+    headline: 1.0
+    summarization: 1.5
+    qa: 1.2
+    regression: 0.8
+  sampling_strategy: "balanced"  # "balanced", "proportional", "custom"
+  
+datasets:
+  flare:
+    name: "TheFinAI/flare"
+    tasks: ["sentiment", "headline", "qa"]
+    
+  ectsum:
+    name: "aeslc/ectsum"
+    tasks: ["summarization"]
+    
+  custom_qa:
+    path: "./data/custom_qa.jsonl"
+    tasks: ["qa"]
+    
+  stock_data:
+    path: "./data/stock_movement.jsonl"
+    tasks: ["regression"]
+
+wandb:
+  project: "finance-llm-lora"
+  entity: "your-org"
+  name: "finlora-mistral-7b"
+  tags: ["finance", "lora", "multi-task"]

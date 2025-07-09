@@ -1,0 +1,56 @@
+# Model Configuration for Finance LLM LoRA Fine-tuning
+
+base_model:
+  name: "mistralai/Mistral-7B-v0.1"  # Alternative: "meta-llama/Llama-2-7b-hf"
+  quantization:
+    load_in_8bit: true
+    load_in_4bit: false
+    bnb_4bit_compute_dtype: "float16"
+    bnb_4bit_use_double_quant: true
+    bnb_4bit_quant_type: "nf4"
+
+lora_config:
+  r: 16
+  lora_alpha: 32
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  lora_dropout: 0.1
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  modules_to_save: ["embed_tokens", "lm_head"]
+
+tokenizer:
+  max_length: 512
+  padding_side: "right"
+  truncation: true
+  add_special_tokens: true
+
+tasks:
+  sentiment:
+    name: "sentiment_classification"
+    type: "classification"
+    labels: ["positive", "negative", "neutral"]
+    instruction: "Classify the sentiment of the following financial statement as positive, negative, or neutral."
+    
+  headline:
+    name: "headline_classification"
+    type: "classification"
+    labels: ["bullish", "bearish", "neutral"]
+    instruction: "Classify the following financial headline as bullish, bearish, or neutral."
+    
+  summarization:
+    name: "earnings_summarization"
+    type: "generation"
+    instruction: "Summarize the following earnings call transcript into key bullet points."
+    max_target_length: 256
+    
+  qa:
+    name: "financial_qa"
+    type: "generation"
+    instruction: "Answer the following question based on the financial context provided."
+    max_target_length: 128
+    
+  regression:
+    name: "stock_movement"
+    type: "regression"
+    instruction: "Predict the next-day percentage change for the given stock based on the news sentiment."
+    normalization: "minmax"
